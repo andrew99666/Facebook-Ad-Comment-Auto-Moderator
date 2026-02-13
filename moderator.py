@@ -17,9 +17,9 @@ import os
 from datetime import datetime, timezone
 
 # ================= CONFIGURATION =================
-ACCESS_TOKEN = "XXXXXXXXXXXX"
-PAGE_ID = "XXXXXXXXXXXX"
-AD_ACCOUNT_ID = "XXXXXXXXXXXX"
+ACCESS_TOKEN = "XXXXXXXXXXXX" <<< CHANGE THIS <<<
+PAGE_ID = "XXXXXXXXXXXX" <<< CHANGE THIS <<<
+AD_ACCOUNT_ID = "XXXXXXXXXXXX" <<< CHANGE THIS <<<
 API_VERSION = "v21.0"
 
 DRY_RUN = False             # True for test run. False for real run. <<< CHANGE THIS <<<
