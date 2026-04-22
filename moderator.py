@@ -145,7 +145,7 @@ def diagnose_ad_account():
     url = f"https://graph.facebook.com/{API_VERSION}/act_{AD_ACCOUNT_ID}"
     res = safe_request(requests.get, url,
                        params={'fields': 'name,account_status'},
-                       use_page_token=False)
+                       use_page_token=True)
     if 'name' in res:
         logger.info(f"    ✅ {res['name']}")
         return True
@@ -153,7 +153,7 @@ def diagnose_ad_account():
     url = f"https://graph.facebook.com/{API_VERSION}/me/adaccounts"
     res = safe_request(requests.get, url,
                        params={'fields': 'name,account_id,account_status', 'limit': 25},
-                       use_page_token=False)
+                       use_page_token=True)
     if 'data' in res:
         for acc in res['data']:
             if acc.get('account_status') == 1:
@@ -314,14 +314,15 @@ def run():
 # ============== SETUP ==============
 
 def setup():
+    global _page_token, _token_type
     logger.info("=" * 55)
     logger.info("  Facebook Ad Comment Hider")
     logger.info("=" * 55)
-    if not check_token_type():
-        sys.exit(1)
+    # ACCESS_TOKEN is a permanent Page token — use it directly
+    _page_token = ACCESS_TOKEN
+    _token_type = 'PAGE'
     if not verify_page():
         sys.exit(1)
-    upgrade_to_page_token()
     diagnose_ad_account()
 
 
