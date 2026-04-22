@@ -11,9 +11,9 @@ import logging
 from datetime import datetime
 
 # ================= CONFIGURATION =================
-ACCESS_TOKEN = "EAAT79SNPYcUBRXm8wdL2HXhRYcwYOcayugGEQEGgZBPZCy7wDiqk6krWepl2tLzf7O0UGZBXNZAjWq1fmhxli9ZAzQmuNh6Pq0hz7ZAa9SZClFJjzV9GlCeehM8jZCfWYuuP8UWjtX6T7rJfqxhltx94ON4mDmne41sGtXSZCpK65wNJhr8TadZBUgJ0F7ILcE0gZDZD"
-PAGE_ID = "921081844424797"
-AD_ACCOUNT_ID = "1686994929351995"
+ACCESS_TOKEN = "XXX"
+PAGE_ID = "XXX"
+AD_ACCOUNT_ID = "XXX"
 API_VERSION = "v21.0"
 
 CHECK_INTERVAL = 300            # Seconds between scans (5 min)
