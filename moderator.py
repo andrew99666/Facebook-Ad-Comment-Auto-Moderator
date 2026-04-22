@@ -11,7 +11,7 @@ import logging
 from datetime import datetime
 
 # ================= CONFIGURATION =================
-ACCESS_TOKEN = "EAAT79SNPYcUBRXRIUwhFOZAvsAzBPhIWMLCv4MS0v8sBbYOZA5zad6efJ1s1ZCTNi80ylbG2n9vHkkZCZBVFqNn8cF0wPf1tDQFV8ZCSR6EZCd0ZAPQcGBfPcMyZB6aYBTKCREXm8HUz52IzxEuWtWs7yYiQd4oqJZC14UdHRwEhhmr9bJUl8JvjcRZAFII3zlHeuMdmZCJFrOaj"
+ACCESS_TOKEN = "EAAT79SNPYcUBRXm8wdL2HXhRYcwYOcayugGEQEGgZBPZCy7wDiqk6krWepl2tLzf7O0UGZBXNZAjWq1fmhxli9ZAzQmuNh6Pq0hz7ZAa9SZClFJjzV9GlCeehM8jZCfWYuuP8UWjtX6T7rJfqxhltx94ON4mDmne41sGtXSZCpK65wNJhr8TadZBUgJ0F7ILcE0gZDZD"
 PAGE_ID = "921081844424797"
 AD_ACCOUNT_ID = "1686994929351995"
 API_VERSION = "v21.0"
@@ -145,7 +145,7 @@ def diagnose_ad_account():
     url = f"https://graph.facebook.com/{API_VERSION}/act_{AD_ACCOUNT_ID}"
     res = safe_request(requests.get, url,
                        params={'fields': 'name,account_status'},
-                       use_page_token=True)
+                       use_page_token=False)
     if 'name' in res:
         logger.info(f"    ✅ {res['name']}")
         return True
@@ -153,7 +153,7 @@ def diagnose_ad_account():
     url = f"https://graph.facebook.com/{API_VERSION}/me/adaccounts"
     res = safe_request(requests.get, url,
                        params={'fields': 'name,account_id,account_status', 'limit': 25},
-                       use_page_token=True)
+                       use_page_token=False)
     if 'data' in res:
         for acc in res['data']:
             if acc.get('account_status') == 1:
@@ -314,15 +314,14 @@ def run():
 # ============== SETUP ==============
 
 def setup():
-    global _page_token, _token_type
     logger.info("=" * 55)
     logger.info("  Facebook Ad Comment Hider")
     logger.info("=" * 55)
-    # ACCESS_TOKEN is a permanent Page token — use it directly
-    _page_token = ACCESS_TOKEN
-    _token_type = 'PAGE'
+    if not check_token_type():
+        sys.exit(1)
     if not verify_page():
         sys.exit(1)
+    upgrade_to_page_token()
     diagnose_ad_account()
 
 
